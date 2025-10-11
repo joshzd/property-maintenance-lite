@@ -1,0 +1,795 @@
+openapi: 3.0.3
+info:
+  title: Property Maintenance Lite API
+  version: 1.0.0
+  description: Lightweight Django REST demo for property maintenance workflows.
+paths:
+  /api/events/:
+    get:
+      operationId: api_events_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkOrderEvent'
+          description: ''
+  /api/events/{id}/:
+    get:
+      operationId: api_events_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this work order event.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkOrderEvent'
+          description: ''
+  /api/properties/:
+    get:
+      operationId: api_properties_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Property'
+          description: ''
+    post:
+      operationId: api_properties_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Property'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Property'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Property'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Property'
+          description: ''
+  /api/properties/{id}/:
+    get:
+      operationId: api_properties_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this property.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Property'
+          description: ''
+    put:
+      operationId: api_properties_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this property.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Property'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Property'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Property'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Property'
+          description: ''
+    patch:
+      operationId: api_properties_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this property.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProperty'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProperty'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProperty'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Property'
+          description: ''
+    delete:
+      operationId: api_properties_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this property.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/schema/:
+    get:
+      operationId: api_schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - ug
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/workorders/:
+    get:
+      operationId: api_workorders_list
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkOrder'
+          description: ''
+    post:
+      operationId: api_workorders_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkOrder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WorkOrder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WorkOrder'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkOrder'
+          description: ''
+  /api/workorders/{id}/:
+    get:
+      operationId: api_workorders_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this work order.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkOrder'
+          description: ''
+    put:
+      operationId: api_workorders_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this work order.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkOrder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WorkOrder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WorkOrder'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkOrder'
+          description: ''
+    patch:
+      operationId: api_workorders_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this work order.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedWorkOrder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedWorkOrder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedWorkOrder'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkOrder'
+          description: ''
+    delete:
+      operationId: api_workorders_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this work order.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/workorders/{id}/assign/:
+    post:
+      operationId: api_workorders_assign_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this work order.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkOrder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WorkOrder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WorkOrder'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkOrder'
+          description: ''
+  /api/workorders/{id}/note/:
+    post:
+      operationId: api_workorders_note_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this work order.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkOrder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WorkOrder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WorkOrder'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkOrder'
+          description: ''
+  /api/workorders/{id}/transition/:
+    post:
+      operationId: api_workorders_transition_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this work order.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkOrder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WorkOrder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WorkOrder'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkOrder'
+          description: ''
+components:
+  schemas:
+    EventTypeEnum:
+      enum:
+      - status_changed
+      - note_added
+      type: string
+      description: |-
+        * `status_changed` - Status Changed
+        * `note_added` - Note Added
+    PatchedProperty:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 200
+        address_line1:
+          type: string
+          nullable: true
+          maxLength: 200
+        city:
+          type: string
+          nullable: true
+          maxLength: 100
+        state:
+          type: string
+          nullable: true
+          maxLength: 50
+        postal_code:
+          type: string
+          nullable: true
+          maxLength: 20
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedWorkOrder:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkOrderEvent'
+          readOnly: true
+        title:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+        priority:
+          $ref: '#/components/schemas/PriorityEnum'
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+        assignee:
+          type: string
+          nullable: true
+          maxLength: 200
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        property:
+          type: integer
+    PriorityEnum:
+      enum:
+      - low
+      - normal
+      - high
+      type: string
+      description: |-
+        * `low` - Low
+        * `normal` - Normal
+        * `high` - High
+    Property:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 200
+        address_line1:
+          type: string
+          nullable: true
+          maxLength: 200
+        city:
+          type: string
+          nullable: true
+          maxLength: 100
+        state:
+          type: string
+          nullable: true
+          maxLength: 50
+        postal_code:
+          type: string
+          nullable: true
+          maxLength: 20
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - id
+      - name
+    StatusEnum:
+      enum:
+      - new
+      - assigned
+      - in_progress
+      - done
+      - canceled
+      type: string
+      description: |-
+        * `new` - New
+        * `assigned` - Assigned
+        * `in_progress` - In Progress
+        * `done` - Done
+        * `canceled` - Canceled
+    WorkOrder:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkOrderEvent'
+          readOnly: true
+        title:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+        priority:
+          $ref: '#/components/schemas/PriorityEnum'
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+        assignee:
+          type: string
+          nullable: true
+          maxLength: 200
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        property:
+          type: integer
+      required:
+      - created_at
+      - description
+      - events
+      - id
+      - property
+      - title
+      - updated_at
+    WorkOrderEvent:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        event_type:
+          $ref: '#/components/schemas/EventTypeEnum'
+        detail:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        work_order:
+          type: integer
+      required:
+      - created_at
+      - detail
+      - event_type
+      - id
+      - work_order
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
