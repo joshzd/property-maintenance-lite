@@ -30,7 +30,14 @@ SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-change")
 DEBUG = os.getenv("DEBUG", "True") == "True"
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
+if not ALLOWED_HOSTS or ALLOWED_HOSTS == [""]:
+    # Automatically add Render's hostname if available
+    render_host = os.getenv("RENDER_EXTERNAL_HOSTNAME")
+    if render_host:
+        ALLOWED_HOSTS = [render_host, "localhost", "127.0.0.1"]
+    else:
+        ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 
 # Application definition
