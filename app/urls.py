@@ -16,9 +16,16 @@ Including another URLconf
 """
 
 from django.contrib import admin
+from django.shortcuts import redirect
 from django.urls import include, path
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 urlpatterns = [
+    # Redirect the root URL to API docs
+    path("", lambda request: redirect("/api/docs/", permanent=False)),
+    # Admin and API routes
     path("admin/", admin.site.urls),
-    path("", include("core.urls")),
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("api/docs/", SpectacularSwaggerView.as_view(url_name="schema")),
+    path("api/", include("core.urls")),
 ]
