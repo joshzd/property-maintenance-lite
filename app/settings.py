@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 import os
 from pathlib import Path
-from urllib.parse import urlparse
+
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -94,17 +95,9 @@ WSGI_APPLICATION = "app.wsgi.application"
 #    }
 # }
 db_url = os.getenv("DATABASE_URL", "")
-parsed = urlparse(db_url) if db_url else None
-if parsed:
+if db_url:
     DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": parsed.path[1:],
-            "USER": parsed.username,
-            "PASSWORD": parsed.password,
-            "HOST": parsed.hostname,
-            "PORT": parsed.port or 5432,
-        }
+        "default": dj_database_url.parse(db_url, conn_max_age=600, ssl_require=True)
     }
 else:
     DATABASES = {
