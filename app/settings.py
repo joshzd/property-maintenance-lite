@@ -97,7 +97,11 @@ WSGI_APPLICATION = "app.wsgi.application"
 db_url = os.getenv("DATABASE_URL", "")
 if db_url:
     DATABASES = {
-        "default": dj_database_url.parse(db_url, conn_max_age=600, ssl_require=True)
+        "default": dj_database_url.parse(
+            db_url,
+            conn_max_age=600,
+            ssl_require=not os.getenv("DISABLE_DB_SSL"),
+        )
     }
 else:
     DATABASES = {
